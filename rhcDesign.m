@@ -54,4 +54,8 @@ for i = 3:ceoffLength
 end
 
 ksol = solve(RHTable(:,1)>0,k,'ReturnConditions',true);
+<<<<<<< HEAD
 conditions = vpa(ksol.conditions);
+=======
+conditions = vpa(ksol.conditions);
+>>>>>>> f80b190f21c99234ccd1c050455c79b266475c3d
