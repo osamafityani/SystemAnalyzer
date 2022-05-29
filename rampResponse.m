@@ -1,7 +1,5 @@
-function [outputArg1,outputArg2] = rampInput(inputArg1,inputArg2)
-%RAMPINPUT Summary of this function goes here
-%   Detailed explanation goes here
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
+function response = rampResponse(sys, finalTime)
+    [t, u] = generateRamp(1, 0.01, finalTime);
+    response = getResponse(sys, u, t);
 end
 
