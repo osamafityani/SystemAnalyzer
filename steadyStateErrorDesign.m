@@ -4,13 +4,12 @@ syms k real
 syms x
 % find the characterstic equation
 
-symG = poly2sym(forwardNum)/ poly2sym(forwardDen);
-symH = poly2sym(backwardNum)/ poly2sym(backwardDen);
+symG = sysFromSym(forwardNum, forwardDen);
+symH = sysFromSym(backwardNum, backwardDen);
 symSys = (symG)/(1 + symG * symH);
-symSys = simplify(symSys);
-[~, den] = numden(symSys);
-charEquation = coeffs(den, x);
-kRange = RHCDesign(charEquation);
+charEquation = getCharEquationSym(symSys);
+
+kRange = rhcDesign(charEquation);
 
 k = 1;
 forwardNum = subs(forwardNum);

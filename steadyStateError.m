@@ -9,9 +9,8 @@ and parablic input
 % find the characterstic equation
 sys = G / (1 + G * H);
 sys = minreal(sys);
-[~, originalDen] = tfdata(sys);
-charEquation = originalDen{1};
-stable = RHC(charEquation);
+charEquation = getCharEquation(sys);
+stable = rhc(charEquation);
 
 if stable == 1
     unityFeedbackSys = G / (1 + G *(H - 1));
