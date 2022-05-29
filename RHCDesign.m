@@ -1,4 +1,4 @@
-function [conditions,RHTable] = RHCDesign(coeffVector)
+function [conditions,RHTable] = rhcDesign(coeffVector)
 
 syms k real
 % Coefficients vector & organizing the first two rows

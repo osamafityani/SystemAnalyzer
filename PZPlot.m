@@ -1,4 +1,4 @@
-function [] = PZPlot(TFNumerator,TFDenomerator)
+function [] = pzPlot(TFNumerator,TFDenomerator)
 
 %Shows the poles and zeros plot 
 

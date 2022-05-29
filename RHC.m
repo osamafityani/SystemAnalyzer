@@ -1,8 +1,6 @@
-function [stable,RHTable, sysRoots] = RHC(coeffVector)
+function [stable,RHTable, sysRoots] = rhc(coeffVector)
 % Routh-Hurwitz Criterion
 %  in this program you must give your system coefficients and the Routh-Hurwitz table would be shown
-
-%%Initialization 
 
 % Coefficients vector & organizing the first two rows
 ceoffLength = length(coeffVector);
