@@ -1,7 +1,7 @@
-function [outputArg1,outputArg2] = generateRamp(inputArg1,inputArg2)
+function [time, ramp] = generateRamp(slope, sampleTime, finalTime)
 %GENERATERAMP Summary of this function goes here
 %   Detailed explanation goes here
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
-end
 
+time = 0:sampleTime:finalTime;
+ramp = slope .* time;
+end
