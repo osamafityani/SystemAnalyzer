@@ -1,4 +1,4 @@
-function [step, ramp, parabolic, kRange] = steadyStateErrorDesign(forwardNum, forwardDen,backwardNum, backwardDen)
+function [step, ramp, parabolic, kRange, error] = steadyStateErrorDesign(forwardNum, forwardDen,backwardNum, backwardDen)
 % find the steady state error with respect to K
 syms k real
 syms x
@@ -15,11 +15,18 @@ k = 1;
 forwardNum = subs(forwardNum);
 forwardNum = double(forwardNum);
 
-syms k real
-    
+forwardDen = subs(forwardDen);
+forwardDen = double(forwardDen);
+
+backwardNum = subs(backwardNum);
+backwardNum = double(backwardNum);
+
+backwardDen = subs(backwardDen);
+backwardDen = double(backwardDen);
+
 G = tf(forwardNum, forwardDen);
 H = tf(backwardNum, backwardDen);
-
+syms k real
 if length(kRange) == 1
     unityFeedbackSys = G / (1 + G *(H - 1));
     unityFeedbackSys = minreal(unityFeedbackSys);
@@ -30,16 +37,19 @@ if length(kRange) == 1
     switch systemType
         case 0
             step = 1 / (1 + errorConstant);
+            error = step;
             ramp = inf;
             parabolic = inf;
         case 1
             step = 0;
             ramp = 1 / errorConstant;
+            error = ramp;
             parabolic = inf;
         case 2
             step = 0;
             ramp = 0;
             parabolic = 1 / errorConstant;
+            error = parabolic;
         otherwise
             step = 0;
             ramp = 0;

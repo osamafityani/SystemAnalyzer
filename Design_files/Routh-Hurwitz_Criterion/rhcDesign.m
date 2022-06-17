@@ -1,15 +1,16 @@
-function [stable,RHTable, sysRoots] = rhc(coeffVector)
-% Routh-Hurwitz Criterion
-%  in this program you must give your system coefficients and the Routh-Hurwitz table would be shown
+function [conditions,RHTable] = rhcDesign(coeffVector)
 
+syms k real
 % Coefficients vector & organizing the first two rows
 ceoffLength = length(coeffVector);
 RHTableColumn = round(ceoffLength/2);
-stable = 1;
+
 %nitialize Routh-Hurwitz table with empty zero array
-RHTable = zeros (ceoffLength,RHTableColumn);
+%RHTable = zeros (ceoffLength,RHTableColumn);
 %  Compute first row of the table
 RHTable(1,:) = coeffVector(1,1:2:ceoffLength);
+RHTable(2:ceoffLength,:) = zeros (ceoffLength-1,RHTableColumn);
+
 %  Check if length of coefficients vector is even or odd
 if (rem(ceoffLength,2) ~= 0 )
     % if odd, second row of table will be
@@ -26,14 +27,9 @@ epss = 0.01;
 %  Calculate other elements of the table
 for i = 3:ceoffLength
 
-    % First special Case: zero in the first column
-    if RHTable (i,1) == 0
-        RHTable (i,1) == epss;
-    end
     
     % Second special case: row of all zeros
     if RHTable (i-1,:) == 0 
-        stable = 0;
         order = (ceoffLength - i) + 2;
         cnt1 = 0;
         cnt2 = 1;
@@ -51,21 +47,15 @@ for i = 3:ceoffLength
         %  compute each element of the table
         RHTable(i,j) = ((RHTable(i-1,1) * RHTable(i-2,j+1)) - (RHTable(i-2,1) * RHTable(i-1,j+1))) / firstElemUpperRow;
     end
-end
-
-%  Compute number of right hand side poles(unstable poles)
-%   Initialize unstable poles with zero
-unstablePoles = 0;
-%   Check change in signs
-for i = 1:ceoffLength - 1
-    if sign(RHTable(i,1)) * sign(RHTable(i+1,1)) == -1
-        unstablePoles = unstablePoles + 1;
+    
+    % First special Case: zero in the first column
+    if RHTable (i,1) == 0
+        RHTable (i,1) = epss;
     end
 end
 
-if unstablePoles ~= 0
-    stable = -1;
+ksol = solve(RHTable(:,1)>0,k,'ReturnConditions',true);
+
+digits(5)
+conditions = vpa(ksol.conditions);
 end
-
-
-sysRoots = roots(coeffVector);

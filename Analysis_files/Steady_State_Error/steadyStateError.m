@@ -1,4 +1,4 @@
-function [stable,step, ramp, parabolic] = steadyStateError(G,H)
+function [stable, step, ramp, parabolic] = steadyStateError(G,H)
 %{
 find the steady state error of any closed loop system due to step, ramp,
 and parablic input
